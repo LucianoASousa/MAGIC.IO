@@ -22,7 +22,6 @@ io.on("connection", (socket) => {
   console.log(socket.id);
  
   socket.on("join_room", (room, user) => {
-    
     socket.join(room);
     const numUsers = io.sockets.adapter.rooms.get(room).size;
 
@@ -35,6 +34,7 @@ io.on("connection", (socket) => {
       socket.emit("numUsers", numUsers);
       buttonCounters[room] = 0;
       console.log(numUsers);
+      socket.room = room;
       
       users[socket.id] = user;
       const roomUsers = [];
@@ -42,8 +42,9 @@ io.on("connection", (socket) => {
         roomUsers.push(users[socketId]);
       });
       io.in(room).emit('update_users', roomUsers);
+      io.in(room).emit("numUsers", numUsers);
       console.log(roomUsers)
-      
+    
     };
   });
 
@@ -58,22 +59,42 @@ io.on("connection", (socket) => {
       io.sockets.adapter.rooms.get(room).forEach((socketId) => {
         roomUsers.push(users[socketId]);
       });
+
       io.in(room).emit('update_users', roomUsers);
-      
+      const numUsers = io.sockets.adapter.rooms.get(room).size;
+      io.in(room).emit("numUsers", numUsers);
+
     }
     
   });
 
-  socket.on("button_pressed", (room) => {
+  socket.on("disconnect", () => {
+    if (socket.room) {
+      socket.leave(socket.room);
+      delete users[socket.id];
+      const roomUsers = [];
+      if(io.sockets.adapter.rooms.get(socket.room)){
+        io.sockets.adapter.rooms.get(socket.room).forEach((socketId) => {
+          roomUsers.push(users[socketId]);
+        });
+        io.in(socket.room).emit('update_users', roomUsers);
+        const numUsers = io.sockets.adapter.rooms.get(socket.room).size;
+        io.in(socket.room).emit("numUsers", numUsers);
+      }
+    }
+  });
+
+  socket.on("button_pressed", () => {
     // Incrementa o contador de botão para a sala
-    buttonCounters[room]++;
+    buttonCounters[socket.room]++;
 
     // Verifica se todos os usuários pressionaram o botão
-    const numUsers = io.sockets.adapter.rooms.get(room).size;
-    if (buttonCounters[room] === numUsers) {
+    const numUsers = io.sockets.adapter.rooms.get(socket.room).size;
+    if (buttonCounters[socket.room] === numUsers) {
       // Todos os usuários pressionaram o botão, então emita um evento e dispara a função desejada
-      io.in(room).emit("all_buttons_pressed");
+      io.in(socket.room).emit("all_buttons_pressed");
       // Dispara a função aqui
+      console.log(buttonCounters[socket.room]);
     }
   });
 });
