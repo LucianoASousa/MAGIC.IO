@@ -33,7 +33,6 @@ io.on("connection", (socket) => {
     } else{
       socket.emit("numUsers", numUsers);
       buttonCounters[room] = 0;
-      console.log(numUsers);
       socket.room = room;
       
       users[socket.id] = user;
@@ -43,7 +42,6 @@ io.on("connection", (socket) => {
       });
       io.in(room).emit('update_users', roomUsers);
       io.in(room).emit("numUsers", numUsers);
-      console.log(roomUsers)
     
     };
   });
@@ -63,7 +61,6 @@ io.on("connection", (socket) => {
       io.in(room).emit('update_users', roomUsers);
       const numUsers = io.sockets.adapter.rooms.get(room).size;
       io.in(room).emit("numUsers", numUsers);
-
     }
     
   });
@@ -84,17 +81,21 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("colors", (color1, color2) => {
+    const colors = color1.concat(color2);
+    socket.colors = colors;
+    socket.to(socket.room).emit("colors", colors);
+  });
+
   socket.on("button_pressed", () => {
     // Incrementa o contador de botão para a sala
     buttonCounters[socket.room]++;
-
     // Verifica se todos os usuários pressionaram o botão
     const numUsers = io.sockets.adapter.rooms.get(socket.room).size;
     if (buttonCounters[socket.room] === numUsers) {
       // Todos os usuários pressionaram o botão, então emita um evento e dispara a função desejada
       io.in(socket.room).emit("all_buttons_pressed");
-      // Dispara a função aqui
-      console.log(buttonCounters[socket.room]);
+      buttonCounters[socket.room] = 0;
     }
   });
 });
