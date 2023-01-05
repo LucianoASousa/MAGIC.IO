@@ -10,7 +10,6 @@ export const Container = styled.div`
         height: 20rem;
         border-radius: 1rem;
         animation: hey 2s linear;
-        background: transparent;
         
     }
     .card2{

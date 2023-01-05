@@ -4,6 +4,7 @@ import button from "../../assets/button.png";
 import { Container } from "./style.js";
 import verso from "../../assets/verso.png";
 import { fetchCards } from "../../services/fetchs.js";
+import { debounce } from "lodash";
 
 
 export function ButtonStart() {
@@ -15,20 +16,26 @@ export function ButtonStart() {
   const [gameStarted, setGameStarted] = useState(false);
 
   async function execute() {
-    console.log("executando");
     setBusy(true);
+    console.log("executando");
 
     const card1 = await fetchCards();
     const card2 = await fetchCards();
-    if(card1 && card2 && card1.image_uris && card2.image_uris && card1.colors && card2.colors) {
+    if (card1 === undefined || card2 === undefined) {
+      execute();
+      return;
+    }
+    if (!card1.image_uris || !card1.colors || !card2.image_uris || !card2.colors) {
+      execute();
+      return;
+    }
       setCard1(card1.image_uris.normal ?? card1.image_uris.large);
       setCard2(card2.image_uris.normal ?? card2.image_uris.large);
       socket.emit("colors", card1.colors ,card2.colors);
-    }else{
-      execute()
-    }
+
     setBusy(false);
   }
+  const debouncedExecute = debounce(execute, 10)
 
 useEffect(() => {
   socket.on("numUsers", (data) => {
@@ -37,7 +44,8 @@ useEffect(() => {
   socket.on("all_buttons_pressed", () => {
     if(!gameStarted){
       setGameStarted(true)
-      execute()
+      debouncedExecute()
+      
     };
   });
 }, []);

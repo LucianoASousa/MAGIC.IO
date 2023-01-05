@@ -65,6 +65,7 @@ io.on("connection", (socket) => {
     
   });
 
+  // Quando um usuário desconecta
   socket.on("disconnect", () => {
     if (socket.room) {
       socket.leave(socket.room);
@@ -81,9 +82,10 @@ io.on("connection", (socket) => {
     }
   });
 
+  // Mandar as cores para o outro usuário
   socket.on("colors", (color1, color2) => {
-    const colors = color1.concat(color2);
-    socket.colors = colors;
+    const colors = color1.concat(color2).filter((item, index, self) => self.indexOf(item) === index);
+    console.log(colors);
     socket.to(socket.room).emit("colors", colors);
   });
 
@@ -91,11 +93,13 @@ io.on("connection", (socket) => {
     // Incrementa o contador de botão para a sala
     buttonCounters[socket.room]++;
     // Verifica se todos os usuários pressionaram o botão
+    if(io.sockets.adapter.rooms.get(socket.room)){
     const numUsers = io.sockets.adapter.rooms.get(socket.room).size;
     if (buttonCounters[socket.room] === numUsers) {
       // Todos os usuários pressionaram o botão, então emita um evento e dispara a função desejada
       io.in(socket.room).emit("all_buttons_pressed");
       buttonCounters[socket.room] = 0;
+    }
     }
   });
 });

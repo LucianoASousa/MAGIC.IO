@@ -1,15 +1,5 @@
 import api from "./api.js";
-
-export const LegalityTypes = {
-    SORCERY : "Sorcery",
-    INSTANT : "Instant",
-    LEGENDARYSORCERY : "Legendary Sorcery",
-    SNOWSORCERY : "Snow Sorcery",
-    LAND : "Land",
-    SNOWLAND : "Snow Land",
-    LEGENDARYLAND : "Legendary Land",
-    BASICSNOWLAND : "Basic Snow Land",
-  }
+import { LegalityTypes } from "../utils/types.js";
 
 export async function fetchCards() {
 
