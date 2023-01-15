@@ -1,2 +1,2 @@
 import io from "socket.io-client";
-export const socket = io.connect(process.env.REACT_APP_API_URL);
+export const socket = io.connect(process.env.URL_MAGIC);
