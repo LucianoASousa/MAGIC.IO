@@ -138,7 +138,9 @@ io.on("connection", (socket) => {
 
 });
 
-
+app.get('/', (req, res) => {
+  res.json({status: 'Server is running!'})
+})
 
 server.listen(PORT, () => {
   console.log("SERVER IS RUNNING, PORT: ", PORT);
