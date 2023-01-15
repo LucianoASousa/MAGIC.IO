@@ -13,10 +13,14 @@ export const GlobalStyle = createGlobalStyle`
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #fff;
+        transform: translate(-50%, -75%);
+        background-color: aliceblue;
         border-radius: 5px;
-        max-width: 500px;
+        width: 50%;
+        height: 50%;
+        max-width: 400px;
+        max-height: 250px;
+        
     }
     
 `

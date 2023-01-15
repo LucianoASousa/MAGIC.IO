@@ -16,20 +16,19 @@ export function ButtonStart() {
   const [card2, setCard2] = useState("");
   const [host, setHost] = useState(false);
 
-  async function execute(AllowedTypes) {
+  async function execute(AllowedTypes, AllowedFormats) {
     
     setBusy(true);
-    console.log(AllowedTypes)
 
-    const card1 = await fetchCards(AllowedTypes);
-    const card2 = await fetchCards(AllowedTypes);
+    const card1 = await fetchCards(AllowedTypes, AllowedFormats);
+    const card2 = await fetchCards(AllowedTypes, AllowedFormats);
     if (card1 === undefined || card2 === undefined) {
-      await execute(AllowedTypes);
+      await execute(AllowedTypes, AllowedFormats);
       return;
       
     }
     if (!card1.image_uris || !card1.colors || !card2.image_uris || !card2.colors) {
-      await execute(AllowedTypes);
+      await execute(AllowedTypes, AllowedFormats);
       return; 
     }
     setCard1(card1.image_uris.normal ?? card1.image_uris.large);
@@ -51,8 +50,8 @@ const debounceExecute = debounce(execute, 100);
     socket.on("filter", (filter) => {
       setAllowedTypes(filter);
     });
-    socket.on("start", (allowedTypes) => {
-      debounceExecute(allowedTypes);
+    socket.on("start", (allowedTypes, allowedFormats) => {
+      debounceExecute(allowedTypes, allowedFormats);
     });
   }, []);
   

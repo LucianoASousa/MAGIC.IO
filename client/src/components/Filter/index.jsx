@@ -14,9 +14,12 @@ function Filter({isOpen, onRequestClose}) {
 
   const formData = new FormData(event.target);
   const allowedTypes = formData.getAll("type");
+  const allowedFormats = formData.getAll("format");
+  console.log(allowedFormats);
+
   onRequestClose()
   
-  socket.emit("filter", allowedTypes);
+  socket.emit("filter", allowedTypes, allowedFormats);
   }
 
   return(
@@ -26,30 +29,66 @@ function Filter({isOpen, onRequestClose}) {
       className="react-modal"
       overlayClassName="react-overlay"
       >
-        <Container onSubmit={handleSubmit}>
-          
-            <label>
-                <input type="checkbox" name="type" 
-                value={LegalityTypes.SORCERY} />
-                Sorcery
-            </label>
-            <label>
-                <input type="checkbox" name="type" 
-                value={LegalityTypes.INSTANT} />
-                Instant
-            </label>
-            <label>
-                <input type="checkbox" name="type" 
-                value={LegalityTypes.CREATURE} />
-                Creature
-            </label>
-            <label>
-                <input type="checkbox" name="type" 
-                value={LegalityTypes.LEGENDARYPLANESWALKER} />
-                Planeswalkers
-            </label>
-
-          <button type="submit">Apply Filter</button>
+        <Container className="linha" onSubmit={handleSubmit}>
+        
+            <div className="types">
+                    <h2>Types</h2>
+                <label>
+                    <input type="checkbox" name="type" 
+                    value={LegalityTypes.SORCERY} />
+                    Sorcery
+                </label>
+                <label>
+                    <input type="checkbox" name="type" 
+                    value={LegalityTypes.INSTANT} />
+                    Instant
+                </label>
+                <label>
+                    <input type="checkbox" name="type" 
+                    value={LegalityTypes.CREATURE} />
+                    Creature
+                </label>
+                <label>
+                    <input type="checkbox" name="type" 
+                    value={LegalityTypes.LEGENDARYPLANESWALKER} />
+                    Planeswalkers
+                </label>
+                <label>
+                    <input type="checkbox" name="type" 
+                    value={LegalityTypes.ARTIFACT} />
+                    Artifact
+                </label>
+                <label>
+                    <input type="checkbox" name="type" 
+                    value={LegalityTypes.ENCHANTMENT} />
+                    Enchantment
+                </label>
+                <label>
+                    <input type="checkbox" name="type" 
+                    value={LegalityTypes.LEGENDARYCREATURE} />
+                    Legendary Creature
+                </label>
+            </div>
+            
+            <div className="formats">
+                    <h2>Formats</h2>
+                <label>
+                    <input type="radio" name="format"
+                    value="standard" />
+                    Standard
+                </label>
+                <label>
+                    <input type="radio" name="format"
+                    value="historic" />
+                    Historic
+                </label>
+                <label>
+                    <input type="radio" name="format"
+                    value="explorer" />
+                    Explorer
+                </label>
+            </div>
+            <button type="submit">Filter</button>
         </Container>
       </Modal>
   );

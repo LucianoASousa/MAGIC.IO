@@ -1,12 +1,12 @@
 import api from "./api.js";
 import { LandTypes } from "../utils/types.js";
 
-export async function fetchCards(AllowedTypes) {
+export async function fetchCards(AllowedTypes, Format) {
     const Lands = Object.values(LandTypes);
 
     const response = await api.get("/cards/random", {
       params: {
-        q: 'legal:historic',
+        q: `legal:${Format}`,
       }
     });
 
@@ -17,5 +17,5 @@ export async function fetchCards(AllowedTypes) {
       return card;
     }
 
-    await fetchCards(AllowedTypes);
+    await fetchCards(AllowedTypes, Format);
   }

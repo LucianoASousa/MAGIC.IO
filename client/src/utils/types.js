@@ -25,6 +25,8 @@ export const LegalityTypes = {
     LEGENDARYPLANESWALKER : "Legendary Planeswalker",
     LEGENDARYARTIFACT : "Legendary Artifact",
     LEGENDARYENCHANTMENT : "Legendary Enchantment",
+    ARTIFACT : "Artifact",
+    ENCHANTMENT : "Enchantment",
   }
 
 export const LandTypes = {
