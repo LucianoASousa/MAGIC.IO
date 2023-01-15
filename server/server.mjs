@@ -6,11 +6,13 @@ import cors from "cors";
 
 app.use(cors());
 
+const PORT = process.env.PORT || 3001;
+
 const server = createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
   },
 });
@@ -119,22 +121,24 @@ io.on("connection", (socket) => {
   //Começar o jogo
   socket.on("start", () => {
     
-    if(socket.filter === undefined) {
-      socket.filter = ["Creature", "Instant", "Sorcery", "Enchantment", "Artifact", "Planeswalker Legendary",]
+    if(socket.types === undefined || socket.types === [] || socket.formats === undefined || socket.formats === []) {
+      socket.types = ["Creature", "Instant", "Sorcery", "Enchantment", "Artifact", "Planeswalker Legendary"];
+      socket.formats = "historic";
     }
-    console.log(socket.filter);
-    io.in(socket.room).emit("start", socket.filter);
+
+    io.in(socket.room).emit("start", socket.types, socket.formats[0]);
     
   });
 
-  socket.on("filter", (filter) => {
-    socket.filter = filter;
+  socket.on("filter", ( types, formats) => {
+    socket.types = types;
+    socket.formats = formats;
   });
 
 });
 
 
 
-server.listen(3001, () => {
-  console.log("SERVER IS RUNNING");
+server.listen(PORT, () => {
+  console.log("SERVER IS RUNNING, PORT: ", PORT);
 });
