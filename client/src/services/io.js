@@ -1,2 +1,4 @@
 import io from "socket.io-client"
-export const socket = io.connect(import.meta.env.VITE_URL_MAGIC);
+import dotenv from "dotenv"
+dotenv.config()
+export const socket = io.connect(process.env.VITE_URL_MAGIC);
