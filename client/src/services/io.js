@@ -1,2 +1,2 @@
-import io from "socket.io-client";
-export const socket = io.connect(process.env.URL_MAGIC);
+import io from "socket.io-client"
+export const socket = io.connect(import.meta.env.VITE_URL_MAGIC);
