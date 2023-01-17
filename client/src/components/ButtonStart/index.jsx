@@ -22,19 +22,12 @@ export function ButtonStart() {
 
     const card1 = await fetchCards(AllowedTypes, AllowedFormats);
     const card2 = await fetchCards(AllowedTypes, AllowedFormats);
-    if (card1 === undefined || card2 === undefined) {
-      await execute(AllowedTypes, AllowedFormats);
-      return;
-      
-    }
-    if (!card1.image_uris || !card1.colors || !card2.image_uris || !card2.colors) {
-      await execute(AllowedTypes, AllowedFormats);
-      return; 
-    }
-    setCard1(card1.image_uris.normal ?? card1.image_uris.large);
-    setCard2(card2.image_uris.normal ?? card2.image_uris.large);
-    socket.emit("colors", card1.colors, card2.colors);
+    const image1 = card1.image_uris ? card1.image_uris.normal : card1.card_faces[0].image_uris.large;
+    const image2 = card2.image_uris ? card2.image_uris.normal : card2.card_faces[0].image_uris.large;
 
+    setCard1(image1);
+    setCard2(image2);
+    socket.emit("colors", card1.color_identity, card2.color_identity);
     
     setBusy(false);
   }
@@ -47,15 +40,10 @@ const debounceExecute = debounce(execute, 100);
     socket.on("host", (data) => {
       setHost(data);
     });
-    socket.on("filter", (filter) => {
-      setAllowedTypes(filter);
-    });
     socket.on("start", (allowedTypes, allowedFormats) => {
       debounceExecute(allowedTypes, allowedFormats);
     });
   }, []);
-  
-  
 
   if (numUsers === 2 && host) {
     if (busy) {
@@ -70,11 +58,11 @@ const debounceExecute = debounce(execute, 100);
       return (
         <Container>
           <img className="card1" src={card1 === "" ? verso : card1} />
-          <button className="start" onClick={() => {
-            socket.emit("start");
-          }}>
+
+          <button className="start" onClick={() => {socket.emit("start");}}>
             <img src={button} />
           </button>
+
           <img className="card2" src={card2 === "" ? verso : card2} />
         </Container>
       );

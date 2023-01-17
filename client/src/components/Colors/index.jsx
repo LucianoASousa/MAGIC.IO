@@ -41,7 +41,8 @@ export function Colors(){
                 <img className="host" src={guild.url} alt={guild.name} />
             </Container>
         )
-      }else{
+      }
+      if(numUsers === 2 && !host){
         return(
             <Container>
                 <img className="notHost" src={guild.url} alt={guild.name} />
@@ -49,4 +50,7 @@ export function Colors(){
         )
       }
     
+        return(
+            <></>
+        );
 }

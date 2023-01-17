@@ -15,7 +15,6 @@ function Filter({isOpen, onRequestClose}) {
   const formData = new FormData(event.target);
   const allowedTypes = formData.getAll("type");
   const allowedFormats = formData.getAll("format");
-  console.log(allowedFormats);
 
   onRequestClose()
   

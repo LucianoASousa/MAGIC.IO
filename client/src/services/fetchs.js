@@ -17,5 +17,5 @@ export async function fetchCards(AllowedTypes, Format) {
       return card;
     }
 
-    await fetchCards(AllowedTypes, Format);
+    return await fetchCards(AllowedTypes, Format);
   }

@@ -121,11 +121,13 @@ io.on("connection", (socket) => {
 
   //Começar o jogo
   socket.on("start", () => {
-    
-    if(socket.types === undefined || socket.types === [] || socket.formats === undefined || socket.formats === []) {
+    if(socket.types === undefined || socket.types[0] === undefined) {
       socket.types = ["Creature", "Instant", "Sorcery", "Enchantment", "Artifact", "Planeswalker Legendary"];
-      socket.formats = "historic";
+      
+    }if(socket.formats === undefined || socket.formats[0] === undefined) {
+      socket.formats = ["historic"];
     }
+    console.log(socket.types, socket.formats);
 
     io.in(socket.room).emit("start", socket.types, socket.formats[0]);
     
@@ -134,6 +136,7 @@ io.on("connection", (socket) => {
   socket.on("filter", ( types, formats) => {
     socket.types = types;
     socket.formats = formats;
+
   });
 
 });
