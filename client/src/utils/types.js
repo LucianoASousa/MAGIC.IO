@@ -14,6 +14,22 @@ import izzet from '../assets/colors/izzet.png';
 import golgari from '../assets/colors/golgari.png';
 import boros from '../assets/colors/boros.png';
 import simic from '../assets/colors/simic.png';
+import esper from '../assets/colors/esper.png';
+import grixis from '../assets/colors/grixis.png';
+import jund from '../assets/colors/jund.png';
+import naya from '../assets/colors/naya.png';
+import bant from '../assets/colors/bant.png';
+import abzan from '../assets/colors/abzan.png';
+import sultai from '../assets/colors/sultai.png';
+import jeskai from '../assets/colors/jeskai.png';
+import mardu from '../assets/colors/mardu.png';
+import temur from '../assets/colors/temur.png';
+import wubr from '../assets/colors/wubr.png';
+import wubg from '../assets/colors/wubg.png';
+import wurg from '../assets/colors/wurg.png';
+import wbrg from '../assets/colors/wbrg.png';
+import ubrg from '../assets/colors/ubrg.png';
+import wubrg from '../assets/colors/wubrg.png';
 
 export const LegalityTypes = {
     CREATURE : "Creature",
@@ -27,6 +43,11 @@ export const LegalityTypes = {
     LEGENDARYENCHANTMENT : "Legendary Enchantment",
     ARTIFACT : "Artifact",
     ENCHANTMENT : "Enchantment",
+    LEGENDARYARTIFACTCREATURE : "Legendary Artifact Creature",
+    LEGENDARYENCHANTMENTCREATURE : "Legendary Enchantment Creature",
+    SNOWCREATURE : "Snow Creature",
+    LEGENDARYSNOWCREATURE : "Legendary Snow Creature",
+    ARTIFACTCREATURE : "Artifact Creature",
   }
 
 export const LandTypes = {
@@ -121,77 +142,82 @@ export const LandTypes = {
     },
     MARDU : {
       Colors: ["W", "R", "B"],
-      url: "",
+      url: mardu,
       name: "Mardu",
     },
     TEMUR : {
       Colors: ["U", "R", "G"],
-      url: "",
+      url: temur,
       name: "Temur",
     },
     JUND : {
       Colors: ["B", "R", "G"],
-      url: "",
+      url: jund,
       name: "Jund",
     },
     NAYA : {
       Colors: ["R", "G", "W"],
-      url: "",
+      url: naya,
       name: "Naya",
     },
     BANT : {
       Colors: ["G", "W", "U"],
-      url: "",
+      url: bant,
       name: "Bant",
     },
     ABZAN : {
       Colors: ["W", "B", "G"],
-      url: "",
+      url: abzan,
       name: "Abzan",
     },
     SULTAI : {
       Colors: ["U", "B", "G"],
-      url: "",
+      url: sultai,
       name: "Sultai",
     },
     GRIXIS : {
       Colors: ["B", "R", "U"],
-      url: "",
+      url: grixis,
       name: "Grixis",
     },
     JESKAI : {
       Colors: ["R", "W", "U"],  
-      url: "",
+      url: jeskai,
       name: "Jeskai",
+    },
+    ESPER : {
+      Colors: ["W", "U", "B"],
+      url: esper,
+      name: "Esper",
     },
     WUBR: {
       Colors: ["W", "U", "B", "R"],
-      url: "",
+      url: wubr,
       name: "WUBR",
     },
     WUBG: {
       Colors: ["W", "U", "B", "G"],
-      url: "",
+      url: wubg,
       name: "WUBG",
     },
     WURG: {
       Colors: ["W", "U", "R", "G"],
-      url: "",
+      url: wurg,
       name: "WURG",
     },
     WBRG: {
       Colors: ["W", "B", "R", "G"],
-      url: "",
+      url: wbrg,
       name: "WBRG",
     },
     UBRG: {
       Colors: ["U", "B", "R", "G"],
-      url: "",
+      url: ubrg,
       name: "UBRG",
     },
     WUBRG : {
       Colors: ["W", "U", "B", "R", "G"],
-      url: "",
+      url: wubrg,
       name: "FIVE COLORS",
     },
   }

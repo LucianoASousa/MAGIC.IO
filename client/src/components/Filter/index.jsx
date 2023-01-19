@@ -8,14 +8,27 @@ Modal.setAppElement("#root");
 
 function Filter({isOpen, onRequestClose}) {
 
+    const SORCERY = [LegalityTypes.SORCERY, LegalityTypes.SNOWSORCERY, LegalityTypes.LEGENDARYSORCERY];
+    const CREATURE = [LegalityTypes.CREATURE, LegalityTypes.SNOWCREATURE, LegalityTypes.ARTIFACTCREATURE];
+    const LEGENDARYCREATURE = [
+        LegalityTypes.LEGENDARYCREATURE, LegalityTypes.LEGENDARYSNOWCREATURE, 
+        LegalityTypes.LEGENDARYARTIFACTCREATURE, LegalityTypes.LEGENDARYENCHANTMENTCREATURE
+    ];
 
   function handleSubmit(event) {
     event.preventDefault();
 
   const formData = new FormData(event.target);
   const allowedTypes = formData.getAll("type");
+  const otherTypes = formData.getAll("types");
   const allowedFormats = formData.getAll("format");
 
+  if(otherTypes.length > 0){
+    otherTypes.forEach((type)=>{
+     allowedTypes.push(...type.split(","))
+    });
+  }
+  
   onRequestClose()
   
   socket.emit("filter", allowedTypes, allowedFormats);
@@ -33,8 +46,8 @@ function Filter({isOpen, onRequestClose}) {
             <div className="types">
                     <h2>Types</h2>
                 <label>
-                    <input type="checkbox" name="type" 
-                    value={LegalityTypes.SORCERY} />
+                    <input type="checkbox" name="types" 
+                    value={SORCERY} />
                     Sorcery
                 </label>
                 <label>
@@ -43,8 +56,8 @@ function Filter({isOpen, onRequestClose}) {
                     Instant
                 </label>
                 <label>
-                    <input type="checkbox" name="type" 
-                    value={LegalityTypes.CREATURE} />
+                    <input type="checkbox" name="types" 
+                    value={CREATURE} />
                     Creature
                 </label>
                 <label>
@@ -63,8 +76,8 @@ function Filter({isOpen, onRequestClose}) {
                     Enchantment
                 </label>
                 <label>
-                    <input type="checkbox" name="type" 
-                    value={LegalityTypes.LEGENDARYCREATURE} />
+                    <input type="checkbox" name="types" 
+                    value={LEGENDARYCREATURE} />
                     Legendary Creature
                 </label>
             </div>

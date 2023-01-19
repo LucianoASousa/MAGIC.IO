@@ -8,6 +8,7 @@ export function Colors(){
     const [colors, setColors] = useState([]);
     const [numUsers, setNumUsers] = useState(0)
     const [host, setHost] = useState(false)
+    const [busy, setBusy] = useState(false)
     
 
     useEffect(() => {
@@ -19,6 +20,9 @@ export function Colors(){
         });
         socket.on("host", (data) => {
             setHost(data)
+        });
+        socket.on("busy", (data) => {
+            setBusy(data)
         });
     }, [])
 
@@ -35,14 +39,14 @@ export function Colors(){
     
     const guild = getGuild(colors);
 
-    if(numUsers === 2 && host){
+    if(numUsers === 2 && host && !busy){
         return(
             <Container>
                 <img className="host" src={guild.url} alt={guild.name} />
             </Container>
         )
       }
-      if(numUsers === 2 && !host){
+      if(numUsers === 2 && !host && !busy){
         return(
             <Container>
                 <img className="notHost" src={guild.url} alt={guild.name} />

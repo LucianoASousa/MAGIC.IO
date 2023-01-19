@@ -18,7 +18,7 @@ export function ButtonStart() {
 
   async function execute(AllowedTypes, AllowedFormats) {
     
-    setBusy(true);
+    socket.emit("busy", true)
 
     const card1 = await fetchCards(AllowedTypes, AllowedFormats);
     const card2 = await fetchCards(AllowedTypes, AllowedFormats);
@@ -29,7 +29,7 @@ export function ButtonStart() {
     setCard2(image2);
     socket.emit("colors", card1.color_identity, card2.color_identity);
     
-    setBusy(false);
+    socket.emit("busy", false)
   }
   
 const debounceExecute = debounce(execute, 100);
@@ -42,6 +42,9 @@ const debounceExecute = debounce(execute, 100);
     });
     socket.on("start", (allowedTypes, allowedFormats) => {
       debounceExecute(allowedTypes, allowedFormats);
+    });
+    socket.on("busy", (data) => {
+      setBusy(data);
     });
   }, []);
 

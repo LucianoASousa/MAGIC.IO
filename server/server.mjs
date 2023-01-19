@@ -21,6 +21,7 @@ const io = new Server(server,
 const buttonCounters = {};
 const users = {};
 const currentHost = {};
+const busy = {};
 
 io.on("connection", (socket) => {
   console.log(socket.id);
@@ -28,6 +29,7 @@ io.on("connection", (socket) => {
   socket.on("join_room", (room, user) => {
     socket.join(room);
     const numUsers = io.sockets.adapter.rooms.get(room).size;
+    busy[room] = 0;
     if (numUsers === 1) {
       currentHost[room] = socket.id;
       socket.isHost = true;
@@ -119,6 +121,16 @@ io.on("connection", (socket) => {
     socket.to(socket.room).emit("colors", colors);
   });
 
+  // Busy
+  socket.on("busy", (data) => {
+  busy[socket.room]++;
+
+  if(busy[socket.room] === 2) {
+  io.in(socket.room).emit("busy", data);
+  busy[socket.room] = 0;
+  }
+  });
+
   //Começar o jogo
   socket.on("start", () => {
     if(socket.types === undefined || socket.types[0] === undefined) {
@@ -127,7 +139,6 @@ io.on("connection", (socket) => {
     }if(socket.formats === undefined || socket.formats[0] === undefined) {
       socket.formats = ["historic"];
     }
-    console.log(socket.types, socket.formats);
 
     io.in(socket.room).emit("start", socket.types, socket.formats[0]);
     
