@@ -1,16 +1,18 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-display: flex;
-justify-content: flex-end;
+position: absolute;
+top: 80%;
+left: 70%;
+   img{
+      width: 4rem;
+   }
 
-
- .host{
-    width: 5rem;
- }
- .notHost{
-      margin-top: 8rem;
-      width: 5rem;
- }
-
+@media (max-width: 768px) {
+top: 80%;
+left: 85%;
+   img{
+      width: 4rem;
+   }
+}
 `

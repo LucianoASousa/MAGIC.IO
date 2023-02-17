@@ -1,6 +1,18 @@
 import { createGlobalStyle } from "styled-components";
+import planeswalker from '../assets/background.png';
 
 export const GlobalStyle = createGlobalStyle`
+
+body{
+    background-color: #282c34;
+    background-image: url(${planeswalker});
+    background-size: 55rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    
+}
+
     .react-overlay{
         top: 0;
         left: 0;

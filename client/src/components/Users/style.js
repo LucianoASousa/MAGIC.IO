@@ -5,7 +5,6 @@ export const Container = styled.div`
     display: flex;
     justify-content: center;
     margin-top: 20px;
-
   .user1{
     align-self: start;
     background-color: #DAA520;
@@ -20,7 +19,6 @@ export const Container = styled.div`
     padding: 5px 20px;
     margin-left: 10px;
   }
-
 `
 
 export const ButtonFilter = styled(ImFilter)`

@@ -27,7 +27,8 @@ export function JoinRoom() {
 
   return(
   <Container>
-      <input type="text" 
+      <input type="text"
+      maxLength={10}
       placeholder="Room"
       className="joinI"  
       onChange={(e) => setRoom(e.target.value)} />
@@ -35,6 +36,7 @@ export function JoinRoom() {
       <button className="joinB" onClick={handleJoinRoom}>Enter</button>
 
       <input type="text"
+      maxLength={10}
       placeholder="User"
       className="joinI"
       onChange={(e) => setUser(e.target.value)} />

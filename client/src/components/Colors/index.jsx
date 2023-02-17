@@ -42,14 +42,14 @@ export function Colors(){
     if(numUsers === 2 && host && !busy){
         return(
             <Container>
-                <img className="host" src={guild.url} alt={guild.name} />
+                <img src={guild.url} alt={guild.name} />
             </Container>
         )
       }
       if(numUsers === 2 && !host && !busy){
         return(
             <Container>
-                <img className="notHost" src={guild.url} alt={guild.name} />
+                <img src={guild.url} alt={guild.name} />
             </Container>
         )
       }
